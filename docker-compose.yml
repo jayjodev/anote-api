@@ -1,10 +1,10 @@
 version: '3.7'
 services:
   backend:
-    container_name: server
+    container_name: backend
     restart: always
     build:
-      context: ./server
+      context: ./backend
       dockerfile: Dockerfile
     env_file: .env
     environment: 
@@ -14,9 +14,9 @@ services:
     volumes:
       # NOT in production
       # Inside container
-      - /server/node_modules
+      - /backend/node_modules
       # Outside container
-      - ./server:/server
+      - ./backend:/backend
     ports:
       - "3000:3000"
     depends_on:
@@ -34,6 +34,18 @@ services:
       - "27017:27017"
     networks:
       - stock
+
+  nginx:
+    container_name: ngnix
+    restart: always
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - stock
+
   
 volumes:
   mongo_data:
