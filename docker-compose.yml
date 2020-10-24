@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+  backend:
+    container_name: server
+    restart: always
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    env_file: .env
+    environment: 
+      - BACKEND_PORT=$BACKEND_PORT
+      - MONGO_DB=$MONGO_DB
+    # Add volumnes
+    volumes:
+      # NOT in production
+      # Inside container
+      - /server/node_modules
+      # Outside container
+      - ./server:/server
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - stock
+
+  db:
+    container_name: db
+    restart: always
+    image: mongo
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - stock
+  
+volumes:
+  mongo_data:
+    
+networks:
+  stock:
