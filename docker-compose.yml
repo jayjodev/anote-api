@@ -22,7 +22,7 @@ services:
     depends_on:
       - db
     networks:
-      - stock
+      - api
 
   db:
     container_name: db
@@ -33,7 +33,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - stock
+      - api
 
   nginx:
     container_name: ngnix
@@ -41,14 +41,19 @@ services:
     build: ./nginx
     ports:
       - "80:80"
+      - "443:443"
+    volumes: 
+     - /data/certs:/etc/nginx/certs
+    #  - /Users/jayjo/Desktop/certs:/etc/nginx/certs
+     ## Source volumes to Target volumes
+
     depends_on:
       - backend
     networks:
-      - stock
-
+      - api
   
 volumes:
   mongo_data:
     
 networks:
-  stock:
+  api:
