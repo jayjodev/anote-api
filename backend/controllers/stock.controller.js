@@ -58,8 +58,8 @@ module.exports = (app) => {
       }
 
       if (stocks) {
-        var dbData = new Date(stocks[stocks.length - 1].created);
-        var now = new Date();
+        let dbData = new Date(stocks[stocks.length - 1].created);
+        let now = new Date();
         console.log(now - dbData);
         if (now - dbData > updateTime) {
           // const TBL_StockInfo = await getStockInfo(req.body.stockCode);
