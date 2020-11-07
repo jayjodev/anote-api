@@ -2,9 +2,13 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const stockSchema = new Schema({
-  result: {
-    type: String,
+  koreaStocks: {
+    type: Object,
     required: true,
+  },
+  created: {
+    type: Date,
+    default: Date.now,
   },
 });
 

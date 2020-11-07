@@ -36,14 +36,14 @@ services:
       - api
 
   nginx:
-    container_name: ngnix
+    container_name: nginx
     restart: always
     build: ./nginx
     ports:
       - "80:80"
       - "443:443"
     volumes: 
-     - /home/certs:/etc/nginx/certs
+     - ./nginx/certs:/etc/nginx/certs
     #  - /Users/jayjo/Desktop/certs:/etc/nginx/certs
      ## Source volumes to Target volumes
 
