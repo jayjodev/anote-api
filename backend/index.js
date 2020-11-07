@@ -1,15 +1,24 @@
-const path = require("path");
-const express = require("express");
-const compress = require("compression");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const app = express();
-require("dotenv").config();
+import * as path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import express from "express";
+import compress from "compression";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import { stockAPIs } from "./controllers/stock.controller.js";
 
-let port = 3000
+dotenv.config();
+
+const app = express();
+
+let port = 3000;
 mongoose.Promise = global.Promise;
 // mongoose.connect("mongodb://localhost:27017/stock");
-mongoose.connect(`mongodb://${process.env.MONGO_DB}/stock`, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(`mongodb://${process.env.MONGO_DB}/stock`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -22,12 +31,20 @@ app.use((req, res, next) => {
   next();
 });
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// please check
+const buildDir = path.join(__dirname, "..", "public");
+
+// const router = express.Router();
 // controllers
-require("./controllers/stock.controller")(app);
-app.use(express.static(path.join(__dirname, "public")));
+app.use("/static", express.static(path.join(__dirname, "public")));
 app.get("/", function (req, res) {
   res.sendFile(path.join(buildDir, "index.html"));
 });
+
+stockAPIs(app);
 
 app.listen(port, function () {
   console.log(`Lunch app is listening on port !${port}`); // eslint-disable-line no-console
