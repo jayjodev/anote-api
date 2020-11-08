@@ -19,7 +19,7 @@ export const stockAPIs = (app) => {
       if (stocks[stocks.length - 1] == undefined) {
         let tblStockInfo = await getStockInfo(req.body.stockCode);
         if (tblStockInfo.JongName === "" || tblStockInfo.JongName === null) {
-          res.send(400, "stockCode is not right");
+          res.send(tblStockInfo);
         } else {
           tblStockInfo.code = req.body.stockCode;
           const stock = new Stock({
