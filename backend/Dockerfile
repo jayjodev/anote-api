@@ -1,6 +1,6 @@
 # Specify a base image
 FROM node:alpine
-WORKDIR /server
+WORKDIR /app
 
 # Install some dependencies
 COPY ./package.json ./

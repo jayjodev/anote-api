@@ -35,7 +35,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // please check
-const buildDir = path.join(__dirname, "..", "public");
+const buildDir = path.join(__dirname, ".", "public");
 
 // const router = express.Router();
 // controllers
