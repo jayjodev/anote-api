@@ -35,8 +35,8 @@ export const stockAPIs = (app) => {
       req.body.stockCode === undefined ||
       req.body.stockCode === ""
     ) {
-      logger.error("case 1: err");
-      console.log("case 1: err");
+      logger.info("case 1: stockCode is not defined");
+      console.log("case 1: stockCode is not defined");
       return res.send(400, "stockCode is not defined");
     }
 
@@ -70,6 +70,7 @@ export const stockAPIs = (app) => {
 
     let dbData = new Date(stocks[stocks.length - 1].created);
     let now = new Date();
+    logger.info(now - dbData);
     console.log(now - dbData);
     if (now - dbData > updateTime) {
       let tblStockInfo = await getStockInfo(req.body.stockCode);
