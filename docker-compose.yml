@@ -16,6 +16,7 @@ services:
       # Inside container
       - /backend/node_modules
       # Outside container
+      # ./backend is local machine : /backend is in the docker
       - ./backend:/backend
     ports:
       - "3000:3000"
