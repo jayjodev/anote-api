@@ -4,7 +4,9 @@ import * as fs from "fs";
 import log4js from "log4js";
 
 log4js.configure({
-  appenders: { stock: { type: "file", filename: "stock.log" } },
+  appenders: {
+    stock: { type: "file", filename: "stock.log" },
+  },
   categories: {
     default: {
       appenders: ["stock"],
@@ -13,13 +15,11 @@ log4js.configure({
   },
 });
 let logger = log4js.getLogger("stock");
-logger.level = "error";
-
-// One minute
+// one minute
 const updateTime = 60000;
 
 export const stockAPIs = (app) => {
-  app.post("/api/stock", async (req, res) => {
+  app.post("/api/stocks", async (req, res) => {
     let ip =
       req.headers["x-forwarded-for"] ||
       req.connection.remoteAddress ||
@@ -35,8 +35,8 @@ export const stockAPIs = (app) => {
       req.body.stockCode === undefined ||
       req.body.stockCode === ""
     ) {
-      logger.info("case 1: stockCode is not defined");
-      console.log("case 1: stockCode is not defined");
+      logger.fatal("case 1: stockCode is not defined");
+      console.log("case 1: err");
       return res.send(400, "stockCode is not defined");
     }
 
@@ -62,7 +62,7 @@ export const stockAPIs = (app) => {
         await stock.save();
         return res.send(stock.koreaStocks);
       } catch (err) {
-        logger.error("case 4:" + err);
+        logger.fatal("case 4:" + err);
         console.log("case 4: err");
         return res.send(400, err);
       }
@@ -70,7 +70,6 @@ export const stockAPIs = (app) => {
 
     let dbData = new Date(stocks[stocks.length - 1].created);
     let now = new Date();
-    logger.info(now - dbData);
     console.log(now - dbData);
     if (now - dbData > updateTime) {
       let tblStockInfo = await getStockInfo(req.body.stockCode);
@@ -99,8 +98,6 @@ export const stockAPIs = (app) => {
   });
 
   app.get("/api/logs", async (req, res) => {
-    logger.info("Search Log");
-    console.log("Search Log");
     const logs = fs.readFileSync("./stock.log").toString("utf-8");
     return res.send(logs);
   });
