@@ -1,7 +1,7 @@
-import Stock from "../models/Stock.js";
-import { getStockInfo } from "./stock.api.js";
 import * as fs from "fs";
 import log4js from "log4js";
+import Stock from "../models/Stock.js";
+import { getStockInfo } from "./stock.api.js";
 
 log4js.configure({
   appenders: {

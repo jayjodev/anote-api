@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import convert from "xml-js";
 
-export function getStockInfo(stockCode) {
+function getStockInfo(stockCode) {
   return fetch(
     `http://asp1.krx.co.kr/servlet/krx.asp.XMLSiseEng?code=${stockCode}`,
     {
@@ -23,3 +23,5 @@ export function getStockInfo(stockCode) {
     })
     .catch((err) => err);
 }
+
+export { getStockInfo };
