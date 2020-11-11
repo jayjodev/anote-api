@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { stockAPIs } from "./controllers/stock.controller.js";
+import { forBase64 } from "./controllers/base64.controller.js";
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ app.get("/", function (req, res) {
 });
 
 stockAPIs(app);
+forBase64(app);
 
 app.listen(port, function () {
   console.log(`Lunch app is listening on port !${port}`); // eslint-disable-line no-console
