@@ -15,8 +15,8 @@ log4js.configure({
   },
 });
 let logger = log4js.getLogger("stock");
-// One seconds
-const updateTime = 1000;
+// Ten seconds
+const updateTime = 10000;
 
 export const stockAPIs = (app) => {
   app.post("/api/stocks", async (req, res) => {
