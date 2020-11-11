@@ -10,11 +10,10 @@ const stockSchema = new Schema({
   },
   created: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
 });
 
 const Stock = mongoose.model("Stock", stockSchema);
-
 
 export default Stock;
