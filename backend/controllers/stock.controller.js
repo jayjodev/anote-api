@@ -98,9 +98,8 @@ export const stockAPIs = (app) => {
     console.log("Seoul Hours: " + seoulTimeHours);
     logger.info(seoulTime - dbData);
     console.log(seoulTime - dbData);
-    logger.info(seoulTimeHoursMinutes)
+    logger.info(seoulTimeHoursMinutes);
     console.log(seoulTimeHoursMinutes);
-
 
     // DB 날짜가 다를 경우 무조건
     if (dbData.getDate() != seoulDay) {
