@@ -2,6 +2,8 @@ import * as path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import express from "express";
+import http from "http";
+
 import compress from "compression";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
@@ -48,6 +50,40 @@ app.get("/", function (req, res) {
 stockAPIs(app);
 forBase64(app);
 
-app.listen(port, function () {
+const server = http.createServer(app);
+
+server.listen(port, function () {
   console.log(`Lunch app is listening on port !${port}`); // eslint-disable-line no-console
 });
+
+
+// import * as socket from "socket.io";
+// const io = new socket.Server(server, {
+//   handlePreflightRequest: (req, res) => {
+//     const headers = {
+//       "Access-Control-Allow-Headers": "*",
+//       "Access-Control-Allow-Origin": "*", //or the specific origin you want to give access to,
+//       "Access-Control-Allow-Credentials": true,
+//     };
+//     res.writeHead(200, headers);
+//     res.end();
+//   },
+// });
+
+// io.on("connection", (socket) => {
+//   // either with send()
+//   socket.send("Hello!");
+
+//   // or with emit() and custom event names
+//   socket.emit("greetings", "Hey!", { ms: "jane" }, Buffer.from([4, 3, 3, 1]));
+
+//   // handle the event sent with socket.send()
+//   socket.on("message", (data) => {
+//     console.log(data);
+//   });
+
+//   // handle the event sent with socket.emit()
+//   socket.on("salutations", (elem1, elem2, elem3) => {
+//     console.log(elem1, elem2, elem3);
+//   });
+// });
