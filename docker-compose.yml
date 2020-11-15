@@ -10,6 +10,10 @@ services:
     environment: 
       - BACKEND_PORT=$BACKEND_PORT
       - MONGO_DB=$MONGO_DB
+      - NINE_STOCK_TIME=$NINE_STOCK_TIME
+      - INPUT_STOCK_TIME=$INPUT_STOCK_TIME
+      - FRONTEND=$FRONTEND
+      
     # Add volumnes
     volumes:
       # NOT in production

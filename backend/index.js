@@ -10,7 +10,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { stockAPIs } from "./controllers/stock.controller.js";
 import { forBase64 } from "./controllers/base64.controller.js";
-import { stockSocket } from "./socket/stock.socket.js";
+import { stockSocket } from "./services/stock.socket.js";
+import { everyOneMinUpdateNineStocks } from "./services/stock.automation.js";
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ mongoose.connect(`mongodb://${process.env.MONGO_DB}/stock`, {
   useUnifiedTopology: true,
 });
 
-let port = 3000;
+let port = process.env.BACKEND_PORT;
 
 // Express
 const app = express();
@@ -54,6 +55,12 @@ const httpserver = http.createServer(app);
 
 // Socket for stock
 stockSocket(httpserver);
+
+// automation updating every one min
+setInterval(function () {
+  console.log("APIs call to KRX every one min");
+  everyOneMinUpdateNineStocks();
+}, process.env.NINE_STOCK_TIME);
 
 httpserver.listen(port, function () {
   console.log(`Lunch app is listening on port !${port}`);
