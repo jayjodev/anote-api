@@ -129,7 +129,7 @@ export const stockServiceFunction = async function (req, res) {
       logger.info("case 6: use cache and call case 8");
       console.log("case 6: use cache");
       const stocks = await Stock.aggregate([
-        { $match: { "koreaStocks.code": req.body.stockCode } },
+        { $match: { "koreaStocks.stockCode": req.body.stockCode } },
       ]);
 
       // Call the APIs
