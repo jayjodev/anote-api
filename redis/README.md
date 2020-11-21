@@ -1,0 +1,1 @@
+logfile "redis_log"

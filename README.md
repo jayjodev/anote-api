@@ -1,6 +1,8 @@
 GET KOREA STOCK Information
 
 - Express
+- Redis
+- MongoDB
 - Docker
 
 ## Bulid Application
@@ -13,5 +15,3 @@ GET KOREA STOCK Information
     ```code
     $ docker-compose up -d --build
     ```
-
-Later: MongoDB
