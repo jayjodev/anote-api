@@ -26,12 +26,13 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      - mongo_db
+      - redis_db
     networks:
       - api
 
-  redis:
-    container_name: redis
+  redis_db:
+    container_name: redis_db
     restart: always
     build:
       context: ./redis
@@ -44,8 +45,8 @@ services:
     networks:
       - api
 
-  db:
-    container_name: db
+  mongo_db:
+    container_name: mongo_db
     restart: always
     image: mongo
     volumes:

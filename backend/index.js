@@ -12,8 +12,17 @@ import { stockAPIs } from "./controllers/stock.controller.js";
 import { forBase64 } from "./controllers/base64.controller.js";
 import { stockSocket } from "./services/stock.socket.js";
 import { everyOneMinUpdateNineStocks } from "./services/stock.automation.js";
-
 dotenv.config();
+
+import * as redis from "redis";
+const client = redis.createClient(`redis://${process.env.REDIS_DB}`);
+
+client.on("error", function (error) {
+  console.error(error);
+});
+
+client.set("key", "value", redis.print);
+client.get("key", redis.print);
 
 // Mongo DB connection
 mongoose.Promise = global.Promise;
