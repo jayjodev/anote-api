@@ -61,26 +61,9 @@ export const stockServiceFunction = async function (req, res) {
     return res.send(400, "stockCode is not defined");
   }
 
-    let stocks = await Stock.aggregate([
-      { $match: { "koreaStocks.stockCode": req.body.stockCode } },
-    ]);
-  
-  // await Stock.remove({})
-
-
-  //  조회 단위 변경
-  // let stocks = await Stock.find({
-  //   "koreaStocks.stockCode": req.body.stockCode,
-  // })
-  //   .sort({ _id: -1 })
-  //   .limit(1);
-
-  // let stocks = await Stock.find()
-  //   .where("koreaStocks.stockCode")
-  //   .equals(req.body.stockCode)
-  //   .limit(1);
-
-
+  let stocks = await Stock.aggregate([
+    { $match: { "koreaStocks.stockCode": req.body.stockCode } },
+  ]);
 
   console.log(stocks);
   // console.log(stocks);
@@ -123,7 +106,7 @@ export const stockServiceFunction = async function (req, res) {
   // DB 날짜가 다를 경우 무조건
   if (dbData.getDate() != seoulDay) {
     logger.info("case 5: new day get data from server and save");
-    console.log("case 5: new day get data from erver and save");
+    console.log("case 5: new day get data from server and save");
     let tblStockInfo = await getStockInfo(req.body.stockCode);
     tblStockInfo.stockCode = req.body.stockCode;
     let stock = new Stock({
@@ -151,16 +134,6 @@ export const stockServiceFunction = async function (req, res) {
       const stocks = await Stock.aggregate([
         { $match: { "koreaStocks.stockCode": req.body.stockCode } },
       ]);
-      // let stocks = await Stock.find({
-      //   "koreaStocks.stockCode": req.body.stockCode,
-      // })
-      //   .sort({ _id: -1 })
-      //   .limit(1);
-
-      // let stocks = await Stock.find()
-      //   .where("koreaStocks.stockCode")
-      //   .equals(req.body.stockCode)
-      //   .limit(1);
 
       // Call the APIs
       krxServer(req);
@@ -176,13 +149,6 @@ export const stockServiceFunction = async function (req, res) {
     const stocks = await Stock.aggregate([
       { $match: { "koreaStocks.stockCode": req.body.stockCode } },
     ]);
-    // let stocks = await Stock.findOne({
-    //   "koreaStocks.stockCode": req.body.stockCode,
-    // });
-    // let stocks = await Stock.find()
-    //   .where("koreaStocks.stockCode")
-    //   .equals(req.body.stockCode)
-    //   .limit(1);
 
     return res.send(stocks[stocks.length - 1].koreaStocks);
   }

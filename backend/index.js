@@ -10,12 +10,15 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { stockAPIs } from "./controllers/stock.controller.js";
 import { forBase64 } from "./controllers/base64.controller.js";
-import { stockSocket } from "./services/stock.socket.js";
-import { everyOneMinUpdateNineStocks } from "./services/stock.automation.js";
+import { stockSocket, stockSocketRedis } from "./services/stock.socket.js";
+import {
+  everyOneMinUpdateNineStocks,
+  everyOneMinUpdateNineStocksRedis,
+} from "./services/stock.automation.js";
 dotenv.config();
 
 import * as redis from "redis";
-const client = redis.createClient(`redis://${process.env.REDIS_DB}`);
+export const client = redis.createClient(`redis://${process.env.REDIS_DB}`);
 
 client.on("error", function (error) {
   console.error(error);
@@ -63,12 +66,12 @@ forBase64(app);
 const httpserver = http.createServer(app);
 
 // Socket for stock
-stockSocket(httpserver);
+stockSocketRedis(httpserver);
 
 // automation updating every one min
 setInterval(function () {
   console.log("APIs call to KRX every one min");
-  everyOneMinUpdateNineStocks();
+  everyOneMinUpdateNineStocksRedis();
 }, process.env.NINE_STOCK_TIME);
 
 httpserver.listen(port, function () {

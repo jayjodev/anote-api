@@ -1,10 +1,10 @@
 import * as fs from "fs";
 import { stockServiceFunction } from "../services/stock.service.js";
+import { stockRedisService } from "../services/stock.redis.service.js";
 
 export const stockAPIs = (app) => {
   app.post("/api/stocks", async (req, res) => {
-    // Time zone
-    return await stockServiceFunction(req, res);
+    return await stockRedisService(req, res);
   });
 
   app.get("/api/logs", async (req, res) => {
