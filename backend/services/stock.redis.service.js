@@ -79,7 +79,7 @@ export const stockRedisService = async function (req, res) {
         }
         // JongName이 존재할 때만
 
-        tblStockInfo.stockCode = stockCode;
+        tblStockInfo.stockCode = req.body.stockCode;
         client.set(
           req.body.stockCode,
           JSON.stringify(tblStockInfo),
@@ -108,7 +108,7 @@ export const stockRedisService = async function (req, res) {
         return res.send(tblStockInfo);
       }
       
-      tblStockInfo.stockCode = stockCode;
+      tblStockInfo.stockCode = req.body.stockCode;
       client.set(
         req.body.stockCode,
         JSON.stringify(tblStockInfo),
