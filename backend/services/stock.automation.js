@@ -50,32 +50,20 @@ export function everyOneMinUpdateNineStocksRedis() {
 }
 
 async function krxCall(stockCode) {
-
   let redisTime = process.env.REDIS_STOCK_TIME;
   client.get(stockCode, async function (err, response) {
-    if (response === null) {
-      console.log(
-        `every one min: get data from server and save in Redis in ${redisTime}`
-      );
-      let tblStockInfo = await getStockInfo(stockCode);
-      if (tblStockInfo.JongName === "" || tblStockInfo.JongName === null) {
-        return res.send(tblStockInfo);
-      }
-      // JongName이 존재할 때만
-      tblStockInfo.stockCode = stockCode;
-      client.set(stockCode, JSON.stringify(tblStockInfo), "EX", redisTime);
-      return res.send(tblStockInfo);
-    } else {
-      console.log("get data from Redis");
-      // client.ttl(stockCode, function (err, res) {
-      //   console.log(res);
-      // });
-      return res.send(JSON.parse(response));
+    console.log(
+      `every one min: get data from server and save in Redis in ${redisTime}`
+    );
+    let tblStockInfo = await getStockInfo(stockCode);
+    if (tblStockInfo.JongName === "" || tblStockInfo.JongName === null) {
+      return null;
     }
+    // JongName이 존재할 때만 Set New Value
+    tblStockInfo.stockCode = stockCode;
+    return client.set(stockCode, JSON.stringify(tblStockInfo), "EX", redisTime);
   });
 }
-
-
 
 export function everyOneMinUpdateNineStocks() {
   let seoul = new Date().toLocaleString("en-US", {
