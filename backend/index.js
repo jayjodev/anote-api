@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { stockAPIs } from "./controllers/stock.controller.js";
 import { forBase64 } from "./controllers/base64.controller.js";
+import { forQueryString } from "./controllers/query.controller.js";
 import { stockSocket, stockSocketRedis } from "./services/stock.socket.js";
 import {
   everyOneMinUpdateNineStocks,
@@ -61,6 +62,7 @@ app.get("/", function (req, res) {
 // Controllers
 stockAPIs(app);
 forBase64(app);
+forQueryString(app);
 
 // Use http
 const httpserver = http.createServer(app);

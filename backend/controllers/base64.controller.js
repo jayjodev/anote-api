@@ -14,7 +14,6 @@ export const forBase64 = (app) => {
   app.post("/api/decode", async (req, res) => {
     try {
       let decodedData = decode(req.body.inputForDecode);
-      console.log(decodedData)
       return res.send(decodedData);
     } catch (err) {
       return res.send(err, "error");
