@@ -6,12 +6,12 @@ GET KOREA STOCK Information
 - Docker
 
 ## Bulid Application
-1. Copy production.
-    ```code
-    $ cp .env_prod .env
-    ```
 
-2. Build the project.
+1. Build the project in local with docker
     ```code
-    $ docker-compose up -d --build
+    $ docker-compose -f docker-compose.yml up -d --build
+    ```
+2. Build the project in production with docker
+    ```code
+    $ docker-compose -f docker-compose-prod.yml up -d --build
     ```

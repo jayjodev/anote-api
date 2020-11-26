@@ -1,7 +1,7 @@
 import log4js from "log4js";
 import { getStockInfo } from "../controllers/stock.api.js";
-import dotenv from "dotenv";
 import { client } from "../index.js";
+import dotenv from "dotenv";
 dotenv.config();
 
 log4js.configure({

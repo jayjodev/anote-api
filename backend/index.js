@@ -7,7 +7,6 @@ import { fileURLToPath } from "url";
 import compress from "compression";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import { stockAPIs } from "./controllers/stock.controller.js";
 import { forBase64 } from "./controllers/base64.controller.js";
 import { forQueryString } from "./controllers/query.controller.js";
@@ -16,7 +15,9 @@ import {
   everyOneMinUpdateNineStocks,
   everyOneMinUpdateNineStocksRedis,
 } from "./services/stock.automation.js";
-dotenv.config();
+
+import dotenv from "dotenv";
+dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
 
 import * as redis from "redis";
 export const client = redis.createClient(`redis://${process.env.REDIS_DB}`);

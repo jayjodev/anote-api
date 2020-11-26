@@ -1,8 +1,8 @@
 import * as socket from "socket.io";
 import { getStockInfo } from "../controllers/stock.api.js";
 import Stock from "../models/Stock.js";
-import dotenv from "dotenv";
 import { client } from "../index.js";
+import dotenv from "dotenv";
 dotenv.config();
 
 export function stockSocketRedis(httpserver) {
