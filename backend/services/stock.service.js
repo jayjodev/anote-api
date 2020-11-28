@@ -117,14 +117,14 @@ export const stockServiceFunction = async function (req, res) {
     return res.send(stock.koreaStocks);
   }
 
-  /* Stock Market : 8시 30분 = 510
-    장마감 : 16시 = 960
+    /* Stock Market : 8시 30분 = 510
+    장마감 : 16시 = 960 but + 30분
     Saturday Sunday 안함. */
 
   if (
     seoulTime - dbData > updateTime &&
     510 <= seoulTimeHoursMinutes &&
-    960 >= seoulTimeHoursMinutes &&
+    990 >= seoulTimeHoursMinutes &&
     !("Sunday" === seoulTodayLabel) &&
     !("Saturday" === seoulTodayLabel)
   ) {
