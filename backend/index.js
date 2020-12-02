@@ -68,14 +68,16 @@ forQueryString(app);
 // Use http
 const httpserver = http.createServer(app);
 
-// Socket for stock
-stockSocketRedis(httpserver);
+// // Service End
 
-// automation updating every one min
-setInterval(function () {
-  console.log("APIs call to KRX every one min");
-  everyOneMinUpdateNineStocksRedis();
-}, process.env.NINE_STOCK_TIME);
+// // Socket for stock
+// stockSocketRedis(httpserver);
+
+// // automation updating every one min
+// setInterval(function () {
+//   console.log("APIs call to KRX every one min");
+//   everyOneMinUpdateNineStocksRedis();
+// }, process.env.NINE_STOCK_TIME);
 
 httpserver.listen(port, function () {
   console.log(`Lunch app is listening on port !${port}`);
