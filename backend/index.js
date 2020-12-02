@@ -12,7 +12,6 @@ import { forBase64 } from "./controllers/base64.controller.js";
 import { forQueryString } from "./controllers/query.controller.js";
 import { stockSocket, stockSocketRedis } from "./services/stock.socket.js";
 import {
-  everyOneMinUpdateNineStocks,
   everyOneMinUpdateNineStocksRedis,
 } from "./services/stock.automation.js";
 
