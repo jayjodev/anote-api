@@ -9,4 +9,4 @@ COPY ./ ./
 EXPOSE 4000
 
 # Default Command
-CMD ["npm", "run", "start-docker"]
+CMD ["npm", "run", "start-local"]

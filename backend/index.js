@@ -11,14 +11,15 @@ import { stockAPIs } from "./controllers/stock.controller.js";
 import { forBase64 } from "./controllers/base64.controller.js";
 import { forQueryString } from "./controllers/query.controller.js";
 import { stockSocket, stockSocketRedis } from "./services/stock.socket.js";
-import {
-  everyOneMinUpdateNineStocksRedis,
-} from "./services/stock.automation.js";
+import { everyOneMinUpdateNineStocksRedis } from "./services/stock.automation.js";
 
 import dotenv from "dotenv";
 dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
 
-import * as redis from "redis";
+import redis from "redis";
+// import pkg from 'redis';
+// const {createClient} = pkg;
+
 export const client = redis.createClient(`redis://${process.env.REDIS_DB}`);
 
 client.on("error", function (error) {
