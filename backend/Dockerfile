@@ -6,7 +6,7 @@ WORKDIR /backend
 COPY ./package.json ./
 RUN npm install
 COPY ./ ./
-EXPOSE 3000
+EXPOSE 4000
 
 # Default Command
 CMD ["npm", "run", "start-docker"]

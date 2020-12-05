@@ -26,7 +26,7 @@ services:
       - ./backend:/backend
       # - backend_data:/backend
     ports:
-      - "3000:3000"
+      - "4000:4000"
     depends_on:
       - mongo_db
       - redis_db
@@ -54,11 +54,42 @@ services:
     volumes:
       - ./data/mongo_db:/data/db
       # - mongo_data:/data/db
-
     ports:
       - "27017:27017"
     networks:
       - api
+
+  cadvisor:
+    container_name: cadvisor
+    restart: always
+    image: google/cadvisor
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - redis_db
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - cadvisor
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:5.1.0
+    ports:
+      - 3000:3000
 
   nginx:
     container_name: nginx
