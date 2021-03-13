@@ -1,12 +1,12 @@
 version: "3.7"
 services:
-  backend:
-    container_name: backend
+  api:
+    container_name: api
     restart: always
     build:
-      context: ./backend
+      context: ./api
       dockerfile: Dockerfile
-    env_file: .env.local
+    entrypoint: ["npm", "run", "$ENV"]
     environment:
       - BACKEND_PORT=$BACKEND_PORT
       - MONGO_DB=$MONGO_DB
@@ -18,46 +18,38 @@ services:
 
     # Add volumnes
     volumes:
-      # NOT in production
-      # Inside container
-      - /backend/node_modules
-      # Outside container
-      # ./backend is local machine : /backend is in the docker
-      - ./backend:/backend
-      # - backend_data:/backend
+      - api_data:/api
     ports:
       - "4000:4000"
     depends_on:
       - mongo_db
       - redis_db
     networks:
-      - api
+      - api_server
 
   redis_db:
     container_name: redis_db
     restart: always
     build:
-      context: ./redis
+      context: ./resources/redis
       dockerfile: Dockerfile
     volumes:
-      - ./data/redis:/data
-      # - redis_data:/data
+      - redis_data:/data
     ports:
       - "6379:6379"
     networks:
-      - api
+      - api_server
 
   mongo_db:
     container_name: mongo_db
     restart: always
     image: mongo
     volumes:
-      - ./data/mongo_db:/data/db
-      # - mongo_data:/data/db
+      - mongo_data:/data/db
     ports:
       - "27017:27017"
     networks:
-      - api
+      - api_server
 
   cadvisor:
     container_name: cadvisor
@@ -72,7 +64,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     depends_on:
       - redis_db
-      
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -81,7 +73,7 @@ services:
     command:
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./resources/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     depends_on:
       - cadvisor
 
@@ -94,24 +86,21 @@ services:
   nginx:
     container_name: nginx
     restart: always
-    build: ./nginx
+    build: ./resources/nginx
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/certs:/etc/nginx/certs
-    #  - /Users/jayjo/Desktop/certs:/etc/nginx/certs
-    ## Source volumes to Target volumes
-
+      - ./resources/nginx/certs:/etc/nginx/certs
     depends_on:
-      - backend
-    networks:
       - api
+    networks:
+      - api_server
 
-# volumes:
-#   backend_data:
-#   redis_data:
-#   mongo_data:
+volumes:
+  api_data:
+  redis_data:
+  mongo_data:
 
 networks:
-  api:
+  api_server:

@@ -12,9 +12,17 @@ import { forBase64 } from "./controllers/base64.controller.js";
 import { forQueryString } from "./controllers/query.controller.js";
 import { stockSocket, stockSocketRedis } from "./services/stock.socket.js";
 import { everyOneMinUpdateNineStocksRedis } from "./services/stock.automation.js";
-
 import dotenv from "dotenv";
-dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
+
+console.log(process.env.NODE_ENV)
+
+if (process.env.NODE_ENV) {
+  dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
+  console.log("test")
+} else {
+  dotenv.config({ path: `./.env` });
+  console.log("test1")
+}
 
 import redis from "redis";
 // import pkg from 'redis';
