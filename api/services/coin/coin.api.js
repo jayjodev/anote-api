@@ -31,4 +31,19 @@ async function getbithumbCoinInfo(coinCode) {
     .catch((err) => err);
 }
 
-export { getUpbitCoinInfo, getbithumbCoinInfo };
+async function getbinanceCoinInfo() {
+  let requestOptions = {
+    method: "GET",
+  };
+  return fetch(
+    `https://api.binance.com/api/v1/ticker/allPrices`,
+    requestOptions
+  )
+    .then((response) => response.text())
+    .then(function (result) {
+      return result;
+    })
+    .catch((err) => err);
+}
+
+export { getUpbitCoinInfo, getbithumbCoinInfo, getbinanceCoinInfo };
