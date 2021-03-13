@@ -7,7 +7,8 @@ import { fileURLToPath } from "url";
 import compress from "compression";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import { stockAPIs } from "./controllers/stock.controller.js";
+
+import { coinAPIs } from "./controllers/coin.controller.js";
 import { forBase64 } from "./controllers/base64.controller.js";
 import { forQueryString } from "./controllers/query.controller.js";
 import { stockSocket, stockSocketRedis } from "./services/stock.socket.js";
@@ -69,9 +70,12 @@ app.get("/", function (req, res) {
 });
 
 // Controllers
-stockAPIs(app);
+coinAPIs(app);
 forBase64(app);
 forQueryString(app);
+
+// out of service
+// stockAPIs(app);
 
 // Use http
 const httpserver = http.createServer(app);
