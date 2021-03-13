@@ -15,14 +15,12 @@ import { stockSocket, stockSocketRedis } from "./services/stock.socket.js";
 import { everyOneMinUpdateNineStocksRedis } from "./services/stock.automation.js";
 import dotenv from "dotenv";
 
-console.log(process.env.NODE_ENV)
-
 if (process.env.NODE_ENV) {
   dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
-  console.log("test")
+  console.log("production or devlopment")
 } else {
   dotenv.config({ path: `./.env` });
-  console.log("test1")
+  console.log("local")
 }
 
 import redis from "redis";
