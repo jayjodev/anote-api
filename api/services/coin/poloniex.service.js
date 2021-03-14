@@ -6,11 +6,17 @@ dotenv.config();
 let redisTime = process.env.REDIS_STOCK_TIME;
 
 export const poloniexService = async function (req, res) {
-  client.get(req.body.coinCode, async function (err, response) {
+
+  let poloniexRedisKey = "poloniex" + req.body.coinCode;
+
+  client.get(poloniexRedisKey, async function (err, response) {
     if (response === null) {
       console.log(`get data from server and save in Redis in ${redisTime}`);
       let result = await getPoloniexCoinInfo();
-      client.set(req.body.coinCode, JSON.stringify(result), "EX", redisTime);
+      let obj = JSON.parse(result);
+      let result_coin_obj = obj.USDT_BTC
+      let result_coin_str = JSON.stringify(result_coin_obj);
+      client.set(poloniexRedisKey, result_coin_str, "EX", redisTime);
       return res.send(result);
     } else {
       console.log("get data from Redis");

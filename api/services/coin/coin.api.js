@@ -52,7 +52,7 @@ async function getbinanceCoinInfo() {
     method: "GET",
   };
   return fetch(
-    `https://api.binance.com/api/v1/ticker/allPrices`,
+    `https://api.binance.com/api/v3/ticker/price`,
     requestOptions
   )
     .then((response) => response.text())
@@ -78,10 +78,26 @@ async function getPoloniexCoinInfo() {
 }
 
 
+async function getbybitCoinInfo() {
+  let requestOptions = {
+    method: "GET",
+  };
+  return fetch(
+    `https://api.bybit.com/v2/public/tickers`,
+    requestOptions
+  )
+    .then((response) => response.text())
+    .then(function (result) {
+      return result;
+    })
+    .catch((err) => err);
+}
+
 export {
   getUpbitCoinInfo,
   getCoinoneCoinInfo,
   getbithumbCoinInfo,
   getbinanceCoinInfo,
   getPoloniexCoinInfo,
+  getbybitCoinInfo,
 };
