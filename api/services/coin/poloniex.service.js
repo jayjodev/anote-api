@@ -17,7 +17,7 @@ export const poloniexService = async function (req, res) {
       let result_coin_obj = obj.USDT_BTC
       let result_coin_str = JSON.stringify(result_coin_obj);
       client.set(poloniexRedisKey, result_coin_str, "EX", redisTime);
-      return res.send(result);
+      return res.send(result_coin_str);
     } else {
       console.log("get data from Redis");
       return res.send(JSON.parse(response));
