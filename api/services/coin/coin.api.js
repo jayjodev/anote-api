@@ -31,6 +31,22 @@ async function getbithumbCoinInfo(coinCode) {
     .catch((err) => err);
 }
 
+async function getCoinoneCoinInfo(coinCode) {
+  let requestOptions = {
+    method: "GET",
+  };
+  return fetch(
+    `https://api.coinone.co.kr/ticker?currency=${coinCode}`,
+    requestOptions
+  )
+    .then((response) => response.text())
+    .then(function (result) {
+      return result;
+    })
+    .catch((err) => err);
+}
+
+// Global
 async function getbinanceCoinInfo() {
   let requestOptions = {
     method: "GET",
@@ -46,4 +62,10 @@ async function getbinanceCoinInfo() {
     .catch((err) => err);
 }
 
-export { getUpbitCoinInfo, getbithumbCoinInfo, getbinanceCoinInfo };
+
+export {
+  getUpbitCoinInfo,
+  getCoinoneCoinInfo,
+  getbithumbCoinInfo,
+  getbinanceCoinInfo,
+};
