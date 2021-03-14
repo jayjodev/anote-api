@@ -62,10 +62,26 @@ async function getbinanceCoinInfo() {
     .catch((err) => err);
 }
 
+async function getPoloniexCoinInfo() {
+  let requestOptions = {
+    method: "GET",
+  };
+  return fetch(
+    `https://poloniex.com/public?command=returnTicker`,
+    requestOptions
+  )
+    .then((response) => response.text())
+    .then(function (result) {
+      return result;
+    })
+    .catch((err) => err);
+}
+
 
 export {
   getUpbitCoinInfo,
   getCoinoneCoinInfo,
   getbithumbCoinInfo,
   getbinanceCoinInfo,
+  getPoloniexCoinInfo,
 };

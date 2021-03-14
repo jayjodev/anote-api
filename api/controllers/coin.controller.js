@@ -3,6 +3,7 @@ import { upbitService } from "../services/coin/upbit.service.js";
 import { bithumbService } from "../services/coin/bithumb.service.js";
 import { binanceService } from "../services/coin/binance.service.js";
 import { coinoneService } from "../services/coin/coinone.service.js";
+import { poloniexService } from "../services/coin/poloniex.service.js";
 
 export const coinAPIs = (app) => {
   app.post("/api/upbit/coins", async (req, res) => {
@@ -19,5 +20,9 @@ export const coinAPIs = (app) => {
 
   app.post("/api/coinone/coins", async (req, res) => {
     return await coinoneService(req, res);
-  })
+  });
+
+  app.post("/api/poloniex/coins", async (req, res) => {
+    return await poloniexService(req, res);
+  });
 };
