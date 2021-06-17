@@ -24,12 +24,12 @@ Development & Production Environment
 1. Build the project in development  with docker
     
     ```
-    $ docker-compose --env-file .env.dev -f  docker-compose.yml up -d --build
+    docker-compose --env-file .env.dev -f  docker-compose.yml up -d --build
 
 2. Build the project in production with docker
     
     ```
-    $ docker-compose --env-file .env.prod -f docker-compose.yml up -d --build
+    docker-compose --env-file .env.prod -f docker-compose.yml up -d --build
     ```
 
-SSL Update Until April 8
+SSL should update before - July 3
