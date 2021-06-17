@@ -1,4 +1,4 @@
-import pkg from "js-base64";
+import * as pkg from "js-base64";
 const { encode, decode } = pkg;
 
 export const forBase64 = (app) => {
